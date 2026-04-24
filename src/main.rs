@@ -6,17 +6,20 @@ mod audio;
 use cpu::CPU;
 use display::Display;
 use keyboard::map_key;
+use audio::Audio;
 
 use winit::application::ApplicationHandler;
 use winit::event::{ WindowEvent, KeyEvent, ElementState };
 use winit::event_loop::{ ActiveEventLoop, EventLoop };
 use winit::keyboard::{ KeyCode, PhysicalKey };
 use winit::window::WindowId;
-
+use std::time::{ Duration, Instant };
 struct App
 {
     cpu: CPU,
     display: Option< Display< 'static >>,
+    audio: Audio,
+    last_tick : Instant
 }
 
 impl App
@@ -25,9 +28,9 @@ impl App
     pub fn new() -> Self
     {
         let mut cpu = CPU::new();
-        cpu.load_rom("roms/test_opcode.ch8" );
+        cpu.load_rom("roms/Space Invaders.ch8" );
 
-        Self { cpu: ( cpu ), display: ( None ) }
+        Self { cpu: ( cpu ), display: ( None ), audio:( Audio::new() ), last_tick : ( Instant::now() )}
     }
 }
 
@@ -38,6 +41,24 @@ impl ApplicationHandler for App
         self.display = Some( Display::new( event_loop ));
 
         if let Some(display) = &self.display
+        {
+            display.window.request_redraw();
+        }
+    }
+
+    fn about_to_wait( &mut self, event_loop: &ActiveEventLoop )
+    {
+        let frame_rate = Duration::from_micros( 16667 ); // 60fps
+        let elapsed = self.last_tick.elapsed();
+
+        // sleep till frame refresh time
+        if elapsed < frame_rate
+        {
+            std::thread::sleep( frame_rate - elapsed );
+        }
+
+        self.last_tick = Instant::now();
+        if let Some( display ) = &self.display
         {
             display.window.request_redraw();
         }
@@ -96,6 +117,16 @@ impl ApplicationHandler for App
                 if self.cpu.sound_timer > 0
                 {
                     self.cpu.sound_timer -= 1;
+                }
+
+                // audio
+                if self.cpu.sound_timer > 0
+                {
+                    self.audio.play();
+                }
+                else
+                {
+                    self.audio.stop();
                 }
 
                 // redraw if redraw flag
