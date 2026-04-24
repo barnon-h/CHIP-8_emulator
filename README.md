@@ -3,6 +3,7 @@
 An intro to emulation using rust
 - 34/35 opcodes implemented.
 - not implemented : op_0NNN due to it causing a bug in the original system.
+- 6 Themes implemented
 
 ## Sources -
 
