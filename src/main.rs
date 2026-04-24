@@ -33,7 +33,6 @@ impl App
 
         let mut cpu = CPU::new();
         cpu.load_rom( &rom );
-        cpu.load_rom("roms/Space Invaders.ch8" );
 
         Self { cpu: ( cpu ), display: ( None ), audio:( Audio::new() ), last_tick : ( Instant::now() )}
     }
