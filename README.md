@@ -1,9 +1,46 @@
+
 # A rust based chip-8 emulator
 
 An intro to emulation using rust
-- 34/35 opcodes implemented.
+
+## Features
+
+- Full Chip8 Instruction set with 34/35 opcodes implemented.
 - not implemented : op_0NNN due to it causing a bug in the original system.
 - 6 Themes implemented
+- Audio support 
+
+## Screenshots
+
+![Classic Theme](screenshots/test.png)
+![Synth Theme](screenshots/synth.png)
+![Cyan Theme](screenshots/green.png)
+
+## Running
+
+```powershell
+chip8.exe roms\your_rom.ch8
+```
+
+
+## Controls
+
+| Key | CHIP-8 |
+|-----|--------|
+| 1 2 3 4 | 1 2 3 C |
+| Q W E R | 4 5 6 D |
+| A S D F | 7 8 9 E |
+| Z X C V | A 0 B F |
+
+| Key | Action |
+|-----|--------|
+| T | Cycle theme |
+| Escape | Quit |
+
+## Requirements
+
+- Windows 10/11
+- No additional dependencies required
 
 ## Sources -
 
