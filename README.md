@@ -5,8 +5,7 @@ An intro to emulation using rust
 
 ## Features
 
-- Full Chip8 Instruction set with 34/35 opcodes implemented.
-- not implemented : op_0NNN due to it causing a bug in the original system.
+- Full Chip8 Instruction set with 34 opcodes implemented.
 - 6 Themes implemented
 - Audio support 
 
